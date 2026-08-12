@@ -120,7 +120,8 @@ module.exports = async function handler(req, res) {
     if (!apiResponse.ok) {
       const errText = await apiResponse.text();
       console.error('LLM API error:', apiResponse.status, errText.substring(0, 500));
-      throw new Error(`AI 服务异常（${apiResponse.status}），请稍后重试`);
+      const detail = errText.substring(0, 300);
+throw new Error(`AI 服务异常（${apiResponse.status}）：${detail}`);
     }
 
     const data = await apiResponse.json();
